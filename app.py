@@ -4,7 +4,11 @@ import plotly.express as px
 from datetime import date, datetime
 from pathlib import Path
 
-st.set_page_config(page_title="80kg Mission Coach", page_icon="💪", layout="wide")
+st.set_page_config(
+    page_title="80kg Mission Coach",
+    page_icon="💪",
+    layout="wide"
+)
 
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
@@ -106,16 +110,6 @@ WORKOUTS = {
     }
 }
 
-ACHIEVEMENTS = [
-    ("🔥", "First Workout", "Complete your first logged workout.", lambda w, wt: w >= 1),
-    ("💪", "5 Workout Club", "Complete 5 workouts.", lambda w, wt: w >= 5),
-    ("🏋️", "10 Workout Club", "Complete 10 workouts.", lambda w, wt: w >= 10),
-    ("🥉", "92kg Club", "Reach 92 kg or below.", lambda w, wt: wt <= 92),
-    ("🥈", "90kg Club", "Reach 90 kg or below.", lambda w, wt: wt <= 90),
-    ("🥇", "85kg Club", "Reach 85 kg or below.", lambda w, wt: wt <= 85),
-    ("🏆", "Mission Complete", "Reach your 80 kg target.", lambda w, wt: wt <= 80),
-]
-
 EXERCISE_LIBRARY = {
     "Barbell Bench Press": {
         "category": "Push",
@@ -215,10 +209,21 @@ EXERCISE_LIBRARY = {
     }
 }
 
+ACHIEVEMENTS = [
+    ("🔥", "First Workout", "Complete your first logged workout.", lambda w, wt: w >= 1),
+    ("💪", "5 Workout Club", "Complete 5 workouts.", lambda w, wt: w >= 5),
+    ("🏋️", "10 Workout Club", "Complete 10 workouts.", lambda w, wt: w >= 10),
+    ("🥉", "92kg Club", "Reach 92 kg or below.", lambda w, wt: wt <= 92),
+    ("🥈", "90kg Club", "Reach 90 kg or below.", lambda w, wt: wt <= 90),
+    ("🥇", "85kg Club", "Reach 85 kg or below.", lambda w, wt: wt <= 85),
+    ("🏆", "Mission Complete", "Reach your 80 kg target.", lambda w, wt: wt <= 80),
+]
+
 
 def load_log():
     if not LOG_FILE.exists() or LOG_FILE.stat().st_size == 0:
         return pd.DataFrame(columns=LOG_COLUMNS)
+
     try:
         df = pd.read_csv(LOG_FILE)
         for col in LOG_COLUMNS:
@@ -250,12 +255,20 @@ def workout_count(df):
 def current_streak(df):
     if df.empty:
         return 0
-    done_dates = set(df[df["workout_done"].fillna(False).astype(bool)]["date"].dropna().astype(str))
+
+    done_dates = set(
+        df[df["workout_done"].fillna(False).astype(bool)]["date"]
+        .dropna()
+        .astype(str)
+    )
+
     streak = 0
     current = date.today()
+
     while current.isoformat() in done_dates:
         streak += 1
         current = current - pd.Timedelta(days=1)
+
     return streak
 
 
@@ -279,49 +292,122 @@ def meal_colour(score):
 
 st.markdown("""
 <style>
-.block-container { padding-top: 1rem; }
+.stApp {
+    background: #f4f7fb !important;
+    color: #0f172a !important;
+}
+
+.block-container {
+    padding-top: 1rem;
+    max-width: 1450px;
+}
+
+h1, h2, h3, h4, h5, h6, p, label, span, div {
+    color: #0f172a;
+}
+
 .hero {
     background: linear-gradient(135deg, #111827, #1e3a8a, #7c3aed);
-    padding: 32px;
+    padding: 34px;
     border-radius: 30px;
-    color: white;
-    margin-bottom: 25px;
+    color: white !important;
+    margin-bottom: 24px;
+    box-shadow: 0 14px 34px rgba(15,23,42,0.22);
 }
-.hero h1, .hero p { color: white !important; }
+
+.hero h1 {
+    color: white !important;
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.hero p {
+    color: #e0e7ff !important;
+    font-size: 16px;
+}
+
 .card {
-    background: white;
+    background: #ffffff;
     padding: 22px;
     border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+    box-shadow: 0 10px 28px rgba(15,23,42,0.08);
     border: 1px solid #e5e7eb;
     margin-bottom: 14px;
 }
-.metric-label { color: #64748b; font-size: 14px; }
-.metric-value { color: #0f172a; font-size: 32px; font-weight: 800; }
+
+.metric-label {
+    color: #64748b !important;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.metric-value {
+    color: #0f172a !important;
+    font-size: 31px;
+    font-weight: 850;
+}
+
 .badge {
     display: inline-block;
     background: #eef2ff;
-    color: #3730a3;
+    color: #3730a3 !important;
     padding: 6px 12px;
     border-radius: 999px;
-    font-weight: 700;
-    margin-bottom: 10px;
+    font-weight: 800;
+    margin-bottom: 12px;
 }
+
 .exercise {
-    background: #f8fafc;
-    padding: 12px 16px;
+    background: #ffffff;
+    padding: 13px 16px;
     border-radius: 14px;
-    margin-bottom: 8px;
-    border: 1px solid #e2e8f0;
-    color: #0f172a;
-}
-.stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6, label {
+    margin-bottom: 9px;
+    border: 1px solid #dbeafe;
     color: #0f172a !important;
+    box-shadow: 0 4px 12px rgba(15,23,42,0.04);
+}
+
+.coach-card {
+    background: linear-gradient(135deg, #ecfeff, #eef2ff);
+    border: 1px solid #c7d2fe;
+}
+
+.road-card {
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    border: 1px solid #fed7aa;
+}
+
+div[data-testid="stTabs"] button p {
+    color: #0f172a !important;
+    font-weight: 700;
+}
+
+div[data-testid="stTabs"] button[aria-selected="true"] p {
+    color: #7c3aed !important;
+}
+
+.stProgress > div > div > div > div {
+    background-color: #7c3aed;
+}
+
+@media only screen and (max-width: 768px) {
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .metric-value {
+        font-size: 25px;
+    }
+
+    .card {
+        padding: 18px;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
 
 df = load_log()
+
 today = datetime.now().strftime("%A")
 today_workout = WORKOUTS[today]
 
@@ -339,7 +425,7 @@ if not df.empty and df["daily_score"].notna().any():
 st.markdown("""
 <div class="hero">
     <h1>80kg Mission Coach 💪</h1>
-    <p>Personalised coaching dashboard: garage gym, FitXR, Nigerian food, fat loss and consistency.</p>
+    <p>Garage gym training, FitXR cardio, Nigerian food coaching and your 95 kg → 80 kg transformation tracker.</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -347,29 +433,33 @@ c1, c2, c3, c4 = st.columns(4)
 
 with c1:
     st.markdown(f"<div class='card'><div class='metric-label'>Current Weight</div><div class='metric-value'>{weight_now:.1f} kg</div></div>", unsafe_allow_html=True)
+
 with c2:
     st.markdown(f"<div class='card'><div class='metric-label'>Weight Lost</div><div class='metric-value'>{lost:.1f} kg</div></div>", unsafe_allow_html=True)
+
 with c3:
     st.markdown(f"<div class='card'><div class='metric-label'>July Workouts</div><div class='metric-value'>{completed}/{JULY_WORKOUT_TARGET}</div></div>", unsafe_allow_html=True)
+
 with c4:
     st.markdown(f"<div class='card'><div class='metric-label'>Current Streak</div><div class='metric-value'>{streak} days</div></div>", unsafe_allow_html=True)
 
 st.progress(progress / 100)
 st.caption(f"Mission progress: {progress:.1f}% complete — {remaining:.1f} kg left to reach 80 kg.")
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs([
     "🏠 Dashboard",
-    "💪 Today’s Workout",
-    "📝 Log Progress",
+    "💪 Today",
+    "📝 Log",
     "📊 Charts",
     "🍛 Meal Coach",
-    "🏆 Achievements",
-    "📚 Exercise Library",
-    "🧠 Weekly Review"
+    "🏆 Badges",
+    "📚 Library",
+    "🧠 Weekly Review",
+    "🚗 Road Trip Mode"
 ])
 
 with tab1:
-    left, right = st.columns([1.4, 1])
+    left, right = st.columns([1.35, 1])
 
     with left:
         st.markdown(f"""
@@ -387,7 +477,7 @@ with tab1:
 
     with right:
         st.markdown(f"""
-        <div class="card">
+        <div class="card coach-card">
             <h3>Daily Coach Score</h3>
             <div class="metric-value">{latest_score}/100</div>
             <p>Based on workout, water, protein, steps and energy.</p>
@@ -397,7 +487,7 @@ with tab1:
         st.markdown("""
         <div class="card">
             <h3>Coach Focus</h3>
-            <p>Do not chase perfection. Complete the session, log it, drink water, and keep the streak alive.</p>
+            <p>Complete the session, log it, drink water and keep the streak alive.</p>
             <p><b>Minimum today:</b> 20 minutes still counts.</p>
         </div>
         """, unsafe_allow_html=True)
@@ -415,9 +505,11 @@ with tab1:
 with tab2:
     st.header(f"{today}: {today_workout['title']}")
     st.write(today_workout["focus"])
+
     for item in today_workout["items"]:
         st.checkbox(item)
-    st.info("Coach note: good form first, progress second.")
+
+    st.info("Good form first, progress second. A completed session beats a perfect session skipped.")
 
 with tab3:
     st.header("Log Today’s Progress")
@@ -474,8 +566,10 @@ with tab4:
         st.plotly_chart(fig_weight, use_container_width=True)
 
         col_a, col_b = st.columns(2)
+
         with col_a:
             st.plotly_chart(px.bar(chart_df, x="date", y="steps", title="Steps"), use_container_width=True)
+
         with col_b:
             st.plotly_chart(px.bar(chart_df, x="date", y="fitxr_calories", title="FitXR Calories"), use_container_width=True)
 
@@ -488,8 +582,10 @@ with tab4:
 
 with tab5:
     st.header("Meal Coach")
+
     score = st.slider("Meal score", 1, 10, 8)
     st.metric("Meal Category", meal_colour(score))
+
     meal = st.text_area("Describe the meal")
 
     if st.button("Get Coach Feedback"):
@@ -510,8 +606,10 @@ with tab6:
     st.header("Achievement Badges")
 
     cols = st.columns(3)
+
     for i, (emoji, name, desc, condition) in enumerate(ACHIEVEMENTS):
         unlocked = condition(completed, weight_now)
+
         with cols[i % 3]:
             if unlocked:
                 st.success(f"{emoji} **{name}**\n\n{desc}")
@@ -558,7 +656,7 @@ with tab8:
         a.metric("Workouts", workouts_7)
         b.metric("Avg Steps", avg_steps)
         c.metric("Avg Water", f"{avg_water:.1f} L")
-        d.metric("Avg Coach Score", f"{avg_score}/100")
+        d.metric("Avg Score", f"{avg_score}/100")
 
         st.metric("FitXR Calories This Week", fitxr_total)
 
@@ -567,7 +665,7 @@ with tab8:
         if workouts_7 >= 4:
             st.success("Strong training week. You are building real consistency.")
         elif workouts_7 >= 2:
-            st.warning("Decent week, but we need to push towards 4+ sessions.")
+            st.warning("Decent week, but push towards 4+ sessions.")
         else:
             st.error("Low activity week. Next week, focus on simply showing up.")
 
@@ -581,9 +679,26 @@ with tab8:
         else:
             st.warning("Try to increase your daily steps gradually.")
 
-        if avg_score >= 85:
-            st.success("Elite weekly score. Keep this pattern going.")
-        elif avg_score >= 70:
-            st.info("Good weekly score. One or two improvements will move you into elite range.")
-        else:
-            st.warning("Coach score is below target. Focus on workout, water, protein and steps.")
+with tab9:
+    st.header("Road Trip Mode 🚗")
+
+    st.markdown("""
+    <div class="card road-card">
+        <h3>Travel Training Plan</h3>
+        <p>This is for your July road trip. The aim is not perfection — it is to avoid losing momentum.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.subheader("Minimum Travel Workout — 15 minutes")
+    travel_items = [
+        "Bodyweight Squats — 3 × 15",
+        "Press-ups or incline press-ups — 3 × 10",
+        "Walking Lunges — 3 × 10 each leg",
+        "Plank — 3 × 30 seconds",
+        "Brisk walk — 10–20 minutes"
+    ]
+
+    for item in travel_items:
+        st.markdown(f"<div class='exercise'>{item}</div>", unsafe_allow_html=True)
+
+    st.info("Road trip rule: even 15 minutes keeps the identity alive. Do not aim for perfect — aim for consistent.")
