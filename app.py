@@ -4,11 +4,7 @@ import plotly.express as px
 from datetime import date, datetime
 from pathlib import Path
 
-st.set_page_config(
-    page_title="80kg Mission Coach",
-    page_icon="💪",
-    layout="wide"
-)
+st.set_page_config(page_title="80kg Mission Coach", page_icon="💪", layout="wide")
 
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
@@ -115,6 +111,7 @@ EXERCISE_LIBRARY = {
         "category": "Push",
         "equipment": "Barbell, bench, plates",
         "muscles": "Chest, shoulders and triceps",
+        "video": "https://www.youtube.com/watch?v=rT7DgCr-3pg",
         "how": "Lie flat on the bench with your eyes under the bar. Grip slightly wider than shoulder width. Keep your feet planted, squeeze your shoulder blades together, lower the bar to mid-chest, then press up under control.",
         "mistakes": "Avoid bouncing the bar off your chest, lifting your hips, or flaring your elbows too wide.",
         "tip": "Use a weight that allows all reps with control. Stop 1–2 reps before failure while rebuilding the habit."
@@ -123,6 +120,7 @@ EXERCISE_LIBRARY = {
         "category": "Legs",
         "equipment": "Barbell, plates",
         "muscles": "Quads, glutes, hamstrings and core",
+        "video": "https://www.youtube.com/watch?v=gcNh17Ckjgg",
         "how": "Stand with feet around shoulder-width apart. Brace your core, keep your chest up, sit the hips back and down, then drive through your heels to stand tall.",
         "mistakes": "Avoid knees collapsing inward, heels lifting, or rounding your back.",
         "tip": "Start lighter and focus on depth, control and balance."
@@ -131,6 +129,7 @@ EXERCISE_LIBRARY = {
         "category": "Legs",
         "equipment": "Barbell or dumbbells",
         "muscles": "Hamstrings, glutes and lower back",
+        "video": "https://www.youtube.com/watch?v=7j-2w4-P14I",
         "how": "Hold the bar or dumbbells in front of your thighs. Keep knees slightly bent, push your hips backwards, lower the weight close to your legs, then squeeze your glutes to return upright.",
         "mistakes": "Do not turn it into a squat. The movement should come mainly from the hips.",
         "tip": "You should feel a strong stretch in your hamstrings, not pain in your lower back."
@@ -139,6 +138,7 @@ EXERCISE_LIBRARY = {
         "category": "Legs",
         "equipment": "Bodyweight or dumbbells",
         "muscles": "Quads, glutes, hamstrings and balance muscles",
+        "video": "https://www.youtube.com/watch?v=L8fvypPrzzs",
         "how": "Step forward, lower until both knees are bent, then drive through the front heel to move into the next rep.",
         "mistakes": "Avoid leaning too far forward or taking very short steps.",
         "tip": "Keep your torso upright and take your time."
@@ -147,6 +147,7 @@ EXERCISE_LIBRARY = {
         "category": "Full Body",
         "equipment": "Barbell, plates",
         "muscles": "Glutes, hamstrings, back, traps, grip and core",
+        "video": "https://www.youtube.com/watch?v=op9kVnSso6Q",
         "how": "Stand with the bar over mid-foot. Hinge down, grip the bar, brace your core, keep the bar close, and push the floor away as you stand tall.",
         "mistakes": "Avoid rounding your back or letting the bar drift away from your body.",
         "tip": "Technique matters more than heavy weight, especially while returning to training."
@@ -155,6 +156,7 @@ EXERCISE_LIBRARY = {
         "category": "Pull",
         "equipment": "Barbell, plates",
         "muscles": "Upper back, lats, rear shoulders and biceps",
+        "video": "https://www.youtube.com/watch?v=FWJR5Ve8bnQ",
         "how": "Hinge forward with a flat back. Pull the bar towards your lower ribs, squeeze your shoulder blades, then lower under control.",
         "mistakes": "Avoid jerking the weight or standing too upright.",
         "tip": "Keep your core tight and pull with your back, not just your arms."
@@ -163,6 +165,7 @@ EXERCISE_LIBRARY = {
         "category": "Push",
         "equipment": "Dumbbells",
         "muscles": "Shoulders and triceps",
+        "video": "https://www.youtube.com/watch?v=qEwKCR5JCog",
         "how": "Start with dumbbells at shoulder height. Brace your core and press overhead until your arms are almost straight, then lower slowly.",
         "mistakes": "Avoid arching your lower back or rushing the reps.",
         "tip": "Seated is easier to control; standing challenges your core more."
@@ -171,6 +174,7 @@ EXERCISE_LIBRARY = {
         "category": "Pull",
         "equipment": "Resistance bands",
         "muscles": "Rear shoulders, upper back and rotator cuff",
+        "video": "https://www.youtube.com/watch?v=eIq5CB9JfKE",
         "how": "Anchor the band at face height. Pull towards your face with elbows high, pause, then return slowly.",
         "mistakes": "Avoid shrugging your shoulders or using momentum.",
         "tip": "Excellent for posture and shoulder health. Keep this in the plan."
@@ -179,6 +183,7 @@ EXERCISE_LIBRARY = {
         "category": "Legs",
         "equipment": "Dumbbell or kettlebell",
         "muscles": "Quads, glutes and core",
+        "video": "https://www.youtube.com/watch?v=MeIiIdhvXT4",
         "how": "Hold one dumbbell close to your chest. Squat down under control, keep your elbows inside your knees, then stand tall.",
         "mistakes": "Avoid leaning forward excessively or letting your heels lift.",
         "tip": "Great for learning squat form safely."
@@ -187,6 +192,7 @@ EXERCISE_LIBRARY = {
         "category": "Core",
         "equipment": "Bodyweight",
         "muscles": "Core, shoulders and glutes",
+        "video": "https://www.youtube.com/watch?v=pSHjTRCQxIw",
         "how": "Elbows under shoulders, body in a straight line, squeeze glutes and brace your abs. Breathe steadily.",
         "mistakes": "Avoid hips sagging or sticking too high.",
         "tip": "Quality matters more than duration."
@@ -195,6 +201,7 @@ EXERCISE_LIBRARY = {
         "category": "Cardio",
         "equipment": "Oculus / Meta headset",
         "muscles": "Cardio system, shoulders, arms, core and legs",
+        "video": "https://www.youtube.com/watch?v=wjK5OYuMVMQ",
         "how": "Choose a boxing or combat class. Keep your guard up, move your feet, punch with control and keep breathing.",
         "mistakes": "Avoid over-swinging your arms or stopping completely between combinations.",
         "tip": "Brilliant for fat loss because it feels more like a game than cardio."
@@ -203,6 +210,7 @@ EXERCISE_LIBRARY = {
         "category": "Cardio",
         "equipment": "Treadmill",
         "muscles": "Cardio system, calves, glutes and legs",
+        "video": "https://www.youtube.com/watch?v=Qv3lS-pN6Ho",
         "how": "Walk briskly with a moderate incline. Keep posture tall and avoid holding the rails unless needed.",
         "mistakes": "Avoid setting the incline so high that your form collapses.",
         "tip": "Excellent low-impact fat-loss tool."
@@ -632,6 +640,10 @@ with tab7:
             st.write(f"**Category:** {details['category']}")
             st.write(f"**Equipment:** {details['equipment']}")
             st.write(f"**Muscles worked:** {details['muscles']}")
+
+            if details.get("video"):
+                st.video(details["video"])
+
             st.write(f"**How to do it:** {details['how']}")
             st.write(f"**Common mistakes:** {details['mistakes']}")
             st.write(f"**Coach tip:** {details['tip']}")
@@ -690,6 +702,7 @@ with tab9:
     """, unsafe_allow_html=True)
 
     st.subheader("Minimum Travel Workout — 15 minutes")
+
     travel_items = [
         "Bodyweight Squats — 3 × 15",
         "Press-ups or incline press-ups — 3 × 10",
