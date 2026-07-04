@@ -384,12 +384,14 @@ with c4:
 st.progress(progress / 100)
 st.caption(f"Mission progress: {progress:.1f}% complete — {remaining:.1f} kg left to reach 80 kg.")
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
     "🏠 Dashboard",
     "💪 Today’s Workout",
     "📝 Log Progress",
     "📊 Charts",
-    "🍛 Meal Coach"
+    "🍛 Meal Coach",
+    "🏆 Achievements",
+    "📚 Exercise Library"
 ])
 
 with tab1:
