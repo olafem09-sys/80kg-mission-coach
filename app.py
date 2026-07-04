@@ -117,16 +117,102 @@ ACHIEVEMENTS = [
 ]
 
 EXERCISE_LIBRARY = {
-    "Barbell Bench Press": ["Push", "Barbell, bench, plates", "Lower to mid-chest and press up under control."],
-    "Barbell Squat": ["Legs", "Barbell, plates", "Brace core, squat down under control, drive back up."],
-    "Romanian Deadlift": ["Legs", "Barbell or dumbbells", "Hinge at the hips and feel the stretch in your hamstrings."],
-    "Walking Lunges": ["Legs", "Dumbbells optional", "Step forward, lower under control, drive through front heel."],
-    "Barbell Deadlift": ["Full Body", "Barbell, plates", "Bar close to body, brace, drive through the floor."],
-    "Barbell Bent-over Row": ["Pull", "Barbell, plates", "Hinge forward and pull towards lower ribs."],
-    "Dumbbell Shoulder Press": ["Push", "Dumbbells", "Press overhead while bracing your core."],
-    "Band Face Pull": ["Pull", "Resistance bands", "Pull band towards your face with elbows high."],
-    "FitXR Combat": ["Cardio", "Oculus / Meta headset", "Keep moving and maintain good punching form."],
-    "Treadmill Incline Walk": ["Cardio", "Treadmill", "Brisk walk with incline; breathing harder but still controlled."]
+    "Barbell Bench Press": {
+        "category": "Push",
+        "equipment": "Barbell, bench, plates",
+        "muscles": "Chest, shoulders and triceps",
+        "how": "Lie flat on the bench with your eyes under the bar. Grip slightly wider than shoulder width. Keep your feet planted, squeeze your shoulder blades together, lower the bar to mid-chest, then press up under control.",
+        "mistakes": "Avoid bouncing the bar off your chest, lifting your hips, or flaring your elbows too wide.",
+        "tip": "Use a weight that allows all reps with control. Stop 1–2 reps before failure while rebuilding the habit."
+    },
+    "Barbell Squat": {
+        "category": "Legs",
+        "equipment": "Barbell, plates",
+        "muscles": "Quads, glutes, hamstrings and core",
+        "how": "Stand with feet around shoulder-width apart. Brace your core, keep your chest up, sit the hips back and down, then drive through your heels to stand tall.",
+        "mistakes": "Avoid knees collapsing inward, heels lifting, or rounding your back.",
+        "tip": "Start lighter and focus on depth, control and balance."
+    },
+    "Romanian Deadlift": {
+        "category": "Legs",
+        "equipment": "Barbell or dumbbells",
+        "muscles": "Hamstrings, glutes and lower back",
+        "how": "Hold the bar or dumbbells in front of your thighs. Keep knees slightly bent, push your hips backwards, lower the weight close to your legs, then squeeze your glutes to return upright.",
+        "mistakes": "Do not turn it into a squat. The movement should come mainly from the hips.",
+        "tip": "You should feel a strong stretch in your hamstrings, not pain in your lower back."
+    },
+    "Walking Lunges": {
+        "category": "Legs",
+        "equipment": "Bodyweight or dumbbells",
+        "muscles": "Quads, glutes, hamstrings and balance muscles",
+        "how": "Step forward, lower until both knees are bent, then drive through the front heel to move into the next rep.",
+        "mistakes": "Avoid leaning too far forward or taking very short steps.",
+        "tip": "Keep your torso upright and take your time."
+    },
+    "Barbell Deadlift": {
+        "category": "Full Body",
+        "equipment": "Barbell, plates",
+        "muscles": "Glutes, hamstrings, back, traps, grip and core",
+        "how": "Stand with the bar over mid-foot. Hinge down, grip the bar, brace your core, keep the bar close, and push the floor away as you stand tall.",
+        "mistakes": "Avoid rounding your back or letting the bar drift away from your body.",
+        "tip": "Technique matters more than heavy weight, especially while returning to training."
+    },
+    "Barbell Bent-over Row": {
+        "category": "Pull",
+        "equipment": "Barbell, plates",
+        "muscles": "Upper back, lats, rear shoulders and biceps",
+        "how": "Hinge forward with a flat back. Pull the bar towards your lower ribs, squeeze your shoulder blades, then lower under control.",
+        "mistakes": "Avoid jerking the weight or standing too upright.",
+        "tip": "Keep your core tight and pull with your back, not just your arms."
+    },
+    "Dumbbell Shoulder Press": {
+        "category": "Push",
+        "equipment": "Dumbbells",
+        "muscles": "Shoulders and triceps",
+        "how": "Start with dumbbells at shoulder height. Brace your core and press overhead until your arms are almost straight, then lower slowly.",
+        "mistakes": "Avoid arching your lower back or rushing the reps.",
+        "tip": "Seated is easier to control; standing challenges your core more."
+    },
+    "Band Face Pull": {
+        "category": "Pull",
+        "equipment": "Resistance bands",
+        "muscles": "Rear shoulders, upper back and rotator cuff",
+        "how": "Anchor the band at face height. Pull towards your face with elbows high, pause, then return slowly.",
+        "mistakes": "Avoid shrugging your shoulders or using momentum.",
+        "tip": "Excellent for posture and shoulder health. Keep this in the plan."
+    },
+    "Goblet Squat": {
+        "category": "Legs",
+        "equipment": "Dumbbell or kettlebell",
+        "muscles": "Quads, glutes and core",
+        "how": "Hold one dumbbell close to your chest. Squat down under control, keep your elbows inside your knees, then stand tall.",
+        "mistakes": "Avoid leaning forward excessively or letting your heels lift.",
+        "tip": "Great for learning squat form safely."
+    },
+    "Plank": {
+        "category": "Core",
+        "equipment": "Bodyweight",
+        "muscles": "Core, shoulders and glutes",
+        "how": "Elbows under shoulders, body in a straight line, squeeze glutes and brace your abs. Breathe steadily.",
+        "mistakes": "Avoid hips sagging or sticking too high.",
+        "tip": "Quality matters more than duration."
+    },
+    "FitXR Combat": {
+        "category": "Cardio",
+        "equipment": "Oculus / Meta headset",
+        "muscles": "Cardio system, shoulders, arms, core and legs",
+        "how": "Choose a boxing or combat class. Keep your guard up, move your feet, punch with control and keep breathing.",
+        "mistakes": "Avoid over-swinging your arms or stopping completely between combinations.",
+        "tip": "Brilliant for fat loss because it feels more like a game than cardio."
+    },
+    "Treadmill Incline Walk": {
+        "category": "Cardio",
+        "equipment": "Treadmill",
+        "muscles": "Cardio system, calves, glutes and legs",
+        "how": "Walk briskly with a moderate incline. Keep posture tall and avoid holding the rails unless needed.",
+        "mistakes": "Avoid setting the incline so high that your form collapses.",
+        "tip": "Excellent low-impact fat-loss tool."
+    }
 }
 
 
@@ -232,9 +318,6 @@ st.markdown("""
 .stMarkdown, .stText, p, h1, h2, h3, h4, h5, h6, label {
     color: #0f172a !important;
 }
-[data-testid="stTabs"] p {
-    color: inherit !important;
-}
 </style>
 """, unsafe_allow_html=True)
 
@@ -274,14 +357,15 @@ with c4:
 st.progress(progress / 100)
 st.caption(f"Mission progress: {progress:.1f}% complete — {remaining:.1f} kg left to reach 80 kg.")
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs([
     "🏠 Dashboard",
     "💪 Today’s Workout",
     "📝 Log Progress",
     "📊 Charts",
     "🍛 Meal Coach",
     "🏆 Achievements",
-    "📚 Exercise Library"
+    "📚 Exercise Library",
+    "🧠 Weekly Review"
 ])
 
 with tab1:
@@ -437,15 +521,69 @@ with tab6:
 with tab7:
     st.header("Garage Gym Exercise Library")
 
-    selected_category = st.selectbox("Filter by category", ["All", "Push", "Pull", "Legs", "Full Body", "Cardio"])
+    selected_category = st.selectbox(
+        "Filter by category",
+        ["All", "Push", "Pull", "Legs", "Full Body", "Cardio", "Core"]
+    )
 
     for name, details in EXERCISE_LIBRARY.items():
-        category, equipment, how = details
-
-        if selected_category != "All" and category != selected_category:
+        if selected_category != "All" and details["category"] != selected_category:
             continue
 
         with st.expander(name):
-            st.write(f"**Category:** {category}")
-            st.write(f"**Equipment:** {equipment}")
-            st.write(f"**How to do it:** {how}")
+            st.write(f"**Category:** {details['category']}")
+            st.write(f"**Equipment:** {details['equipment']}")
+            st.write(f"**Muscles worked:** {details['muscles']}")
+            st.write(f"**How to do it:** {details['how']}")
+            st.write(f"**Common mistakes:** {details['mistakes']}")
+            st.write(f"**Coach tip:** {details['tip']}")
+
+with tab8:
+    st.header("Weekly Coach Review")
+
+    if df.empty:
+        st.warning("No data yet. Log a few days first.")
+    else:
+        review_df = df.copy()
+        review_df["date"] = pd.to_datetime(review_df["date"], errors="coerce")
+        last_7 = review_df[review_df["date"] >= pd.Timestamp.today() - pd.Timedelta(days=7)]
+
+        workouts_7 = int(last_7["workout_done"].fillna(False).astype(bool).sum())
+        avg_steps = int(last_7["steps"].fillna(0).mean()) if not last_7.empty else 0
+        avg_water = float(last_7["water_litres"].fillna(0).mean()) if not last_7.empty else 0
+        avg_score = int(last_7["daily_score"].fillna(0).mean()) if not last_7.empty else 0
+        fitxr_total = int(last_7["fitxr_calories"].fillna(0).sum()) if not last_7.empty else 0
+
+        a, b, c, d = st.columns(4)
+        a.metric("Workouts", workouts_7)
+        b.metric("Avg Steps", avg_steps)
+        c.metric("Avg Water", f"{avg_water:.1f} L")
+        d.metric("Avg Coach Score", f"{avg_score}/100")
+
+        st.metric("FitXR Calories This Week", fitxr_total)
+
+        st.subheader("Coach Feedback")
+
+        if workouts_7 >= 4:
+            st.success("Strong training week. You are building real consistency.")
+        elif workouts_7 >= 2:
+            st.warning("Decent week, but we need to push towards 4+ sessions.")
+        else:
+            st.error("Low activity week. Next week, focus on simply showing up.")
+
+        if avg_water >= 2.5:
+            st.success("Hydration is on target.")
+        else:
+            st.warning("Hydration needs work. Aim for 2.5 litres daily.")
+
+        if avg_steps >= 8000:
+            st.success("Steps are strong.")
+        else:
+            st.warning("Try to increase your daily steps gradually.")
+
+        if avg_score >= 85:
+            st.success("Elite weekly score. Keep this pattern going.")
+        elif avg_score >= 70:
+            st.info("Good weekly score. One or two improvements will move you into elite range.")
+        else:
+            st.warning("Coach score is below target. Focus on workout, water, protein and steps.")
