@@ -528,3 +528,53 @@ with tab5:
         st.write("- Rice portion: about one fist-sized serving.")
         st.write("- Stew: flavour is fine, but avoid excess oil.")
         st.write("- Water: aim for 2.5–3 litres daily.")
+with tab6:
+    st.header("Achievement Badges")
+
+    workouts = workout_count(df)
+    weight = latest_weight(df)
+
+    cols = st.columns(3)
+
+    for i, badge in enumerate(ACHIEVEMENTS):
+        unlocked = False
+
+        if badge["condition"] == "workouts >= 1":
+            unlocked = workouts >= 1
+        elif badge["condition"] == "workouts >= 5":
+            unlocked = workouts >= 5
+        elif badge["condition"] == "workouts >= 10":
+            unlocked = workouts >= 10
+        elif badge["condition"] == "weight <= 92":
+            unlocked = weight <= 92
+        elif badge["condition"] == "weight <= 90":
+            unlocked = weight <= 90
+        elif badge["condition"] == "weight <= 85":
+            unlocked = weight <= 85
+        elif badge["condition"] == "weight <= 80":
+            unlocked = weight <= 80
+
+        with cols[i % 3]:
+            if unlocked:
+                st.success(f"{badge['emoji']} **{badge['name']}**\n\n{badge['description']}")
+            else:
+                st.info(f"🔒 **{badge['name']}**\n\n{badge['description']}")
+
+
+with tab7:
+    st.header("Garage Gym Exercise Library")
+
+    selected_category = st.selectbox(
+        "Filter by category",
+        ["All", "Push", "Pull", "Legs", "Full Body", "Cardio"]
+    )
+
+    for name, details in EXERCISE_LIBRARY.items():
+        if selected_category != "All" and details["category"] != selected_category:
+            continue
+
+        with st.expander(name):
+            st.write(f"**Category:** {details['category']}")
+            st.write(f"**Equipment:** {details['equipment']}")
+            st.write(f"**How to do it:** {details['how']}")
+            st.write(f"**Coach tip:** {details['tip']}")
