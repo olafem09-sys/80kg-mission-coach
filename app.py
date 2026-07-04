@@ -103,7 +103,114 @@ WORKOUTS = {
     }
 }
 
+ACHIEVEMENTS = [
+    {
+        "name": "First Workout",
+        "emoji": "🔥",
+        "description": "Completed your first logged workout.",
+        "condition": "workouts >= 1"
+    },
+    {
+        "name": "5 Workout Club",
+        "emoji": "💪",
+        "description": "Completed 5 workouts.",
+        "condition": "workouts >= 5"
+    },
+    {
+        "name": "10 Workout Club",
+        "emoji": "🏋️",
+        "description": "Completed 10 workouts.",
+        "condition": "workouts >= 10"
+    },
+    {
+        "name": "92kg Club",
+        "emoji": "🥉",
+        "description": "Reached 92 kg or below.",
+        "condition": "weight <= 92"
+    },
+    {
+        "name": "90kg Club",
+        "emoji": "🥈",
+        "description": "Reached 90 kg or below.",
+        "condition": "weight <= 90"
+    },
+    {
+        "name": "85kg Club",
+        "emoji": "🥇",
+        "description": "Reached 85 kg or below.",
+        "condition": "weight <= 85"
+    },
+    {
+        "name": "Mission Complete",
+        "emoji": "🏆",
+        "description": "Reached your 80 kg goal.",
+        "condition": "weight <= 80"
+    }
+]
 
+
+EXERCISE_LIBRARY = {
+    "Barbell Bench Press": {
+        "category": "Push",
+        "equipment": "Barbell, bench, plates",
+        "how": "Lie on the bench, grip the bar slightly wider than shoulder width, lower to mid-chest, then press up under control.",
+        "tip": "Keep your feet planted and shoulder blades squeezed together."
+    },
+    "Barbell Squat": {
+        "category": "Legs",
+        "equipment": "Barbell, plates",
+        "how": "Stand with feet shoulder-width apart, brace your core, squat down under control, then drive back up through your heels.",
+        "tip": "Keep your chest up and knees tracking over your toes."
+    },
+    "Romanian Deadlift": {
+        "category": "Legs",
+        "equipment": "Barbell or dumbbells",
+        "how": "Hold the weight in front of your thighs, push your hips back, keep your knees slightly bent and lower until you feel your hamstrings stretch.",
+        "tip": "This is a hip hinge, not a squat."
+    },
+    "Walking Lunges": {
+        "category": "Legs",
+        "equipment": "Dumbbells optional",
+        "how": "Step forward, lower both knees, then drive through the front heel to step into the next lunge.",
+        "tip": "Keep your torso upright and controlled."
+    },
+    "Barbell Deadlift": {
+        "category": "Full Body",
+        "equipment": "Barbell, plates",
+        "how": "Stand with the bar over mid-foot, hinge down, grip the bar, brace your core, and drive through the floor to stand tall.",
+        "tip": "Keep the bar close to your body throughout."
+    },
+    "Barbell Bent-over Row": {
+        "category": "Pull",
+        "equipment": "Barbell, plates",
+        "how": "Hinge forward with a flat back and pull the bar towards your lower ribs.",
+        "tip": "Avoid jerking the weight. Pull with control."
+    },
+    "Dumbbell Shoulder Press": {
+        "category": "Push",
+        "equipment": "Dumbbells",
+        "how": "Start with dumbbells at shoulder height, brace your core, and press overhead.",
+        "tip": "Avoid arching your lower back."
+    },
+    "Band Face Pull": {
+        "category": "Pull",
+        "equipment": "Resistance bands",
+        "how": "Anchor the band at face height, pull towards your face with elbows high, then return slowly.",
+        "tip": "Excellent for posture and shoulder health."
+    },
+    "FitXR Combat": {
+        "category": "Cardio",
+        "equipment": "Meta/Oculus headset",
+        "how": "Choose a boxing or combat class and keep moving throughout the session.",
+        "tip": "Focus on consistent movement rather than perfect punches."
+    },
+    "Treadmill Incline Walk": {
+        "category": "Cardio",
+        "equipment": "Treadmill",
+        "how": "Walk at a brisk pace with a light-to-moderate incline.",
+        "tip": "You should be breathing harder but still able to speak."
+    }
+}
 def load_log():
     columns = [
         "date", "weight", "workout_done", "workout_type",
