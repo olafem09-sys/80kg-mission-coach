@@ -105,14 +105,20 @@ WORKOUTS = {
 
 
 def load_log():
-    if LOG_FILE.exists():
-        return pd.read_csv(LOG_FILE)
-    return pd.DataFrame(columns=[
+    columns = [
         "date", "weight", "workout_done", "workout_type",
         "fitxr_minutes", "fitxr_calories", "steps",
         "water_litres", "protein_grams", "energy",
         "meal_score", "notes"
-    ])
+    ]
+
+    if not LOG_FILE.exists() or LOG_FILE.stat().st_size == 0:
+        return pd.DataFrame(columns=columns)
+
+    try:
+        return pd.read_csv(LOG_FILE)
+    except pd.errors.EmptyDataError:
+        return pd.DataFrame(columns=columns)
 
 
 def save_log(entry):
