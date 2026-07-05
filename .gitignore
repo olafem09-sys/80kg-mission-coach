@@ -1,17 +1,38 @@
-# Python cache
+# -----------------------------
+# Python
+# -----------------------------
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
 # Virtual environment
 .venv/
+venv/
+env/
 
-# Local database
-data/database/*.db
-data/backups/*.db
+# -----------------------------
+# Streamlit
+# -----------------------------
+.streamlit/secrets.toml
 
-# VS Code
+# -----------------------------
+# SQLite
+# -----------------------------
+*.db
+*.sqlite
+*.sqlite3
+
+# Keep empty folders
+!.gitkeep
+
+# -----------------------------
+# IDE
+# -----------------------------
 .vscode/
+.idea/
 
-# OS files
-.DS_Store
+# -----------------------------
+# OS
+# -----------------------------
 Thumbs.db
+.DS_Store
