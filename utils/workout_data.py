@@ -81,10 +81,10 @@ WEEKLY_WORKOUT_PLAN = {
         "focus": "Recovery and weekly review",
         "duration": "Optional",
         "exercises": [
-            "Rest",
-            "Light Walk",
-            "Weekly Review",
-        ],
+    "Rest day",
+    "Optional 20–30 minute easy walk",
+    "Weekly check-in",
+],
     },
 }
 
@@ -420,39 +420,7 @@ EXERCISE_LIBRARY = {
         "coach_tip": "Good warm-up before upper-body work.",
         "alternatives": ["Band Pull-apart", "Arm Circles"],
     },
-    "Rest": {
-        "category": "Recovery",
-        "equipment": ["None"],
-        "muscles": ["Recovery"],
-        "difficulty": "Beginner",
-        "video": "",
-        "instructions": "Take a planned rest day. Keep movement light and prioritise sleep and hydration.",
-        "common_mistakes": "Treating rest day as failure.",
-        "coach_tip": "Recovery is part of the programme.",
-        "alternatives": ["Light Walk", "Stretching"],
-    },
-    "Light Walk": {
-        "category": "Recovery",
-        "equipment": ["Bodyweight"],
-        "muscles": ["Cardio", "Legs"],
-        "difficulty": "Beginner",
-        "video": "",
-        "instructions": "Walk at an easy pace for 20–40 minutes.",
-        "common_mistakes": "Turning every recovery walk into hard cardio.",
-        "coach_tip": "Keep it easy enough to aid recovery.",
-        "alternatives": ["Treadmill Brisk Walk"],
-    },
-    "Weekly Review": {
-        "category": "Recovery",
-        "equipment": ["None"],
-        "muscles": ["Mindset"],
-        "difficulty": "Beginner",
-        "video": "",
-        "instructions": "Review weight, workouts, water, steps, food and challenges from the week.",
-        "common_mistakes": "Only reviewing the scale and ignoring habits.",
-        "coach_tip": "Look for patterns, not perfection.",
-        "alternatives": ["Coach Check-in"],
-    },
+    
 }
 
 
