@@ -3,13 +3,9 @@ from datetime import datetime
 import pandas as pd
 import streamlit as st
 
-from components.styles import (
-    apply_global_styles,
-    content_card,
-    exercise_row,
-    hero,
-    metric_card,
-)
+from components.navigation import sidebar_navigation
+from components.styles import apply_global_styles, hero, exercise_row, content_card
+from components.cards import stat_card, milestone_card
 from config import APP_NAME, START_WEIGHT, TARGET_WEIGHT
 from utils.storage import (
     get_food_database,
@@ -18,143 +14,139 @@ from utils.storage import (
     initialise_database,
 )
 from utils.workout_data import (
-    EXERCISE_LIBRARY,
-    get_exercise_names,
-    get_exercises_by_category,
     get_today_workout,
+    get_exercises_by_category,
+    get_exercise_names,
 )
 
-st.set_page_config(
-    page_title=APP_NAME,
-    page_icon="💪",
-    layout="wide",
-)
+st.set_page_config(page_title=APP_NAME, page_icon="💪", layout="wide")
 
 initialise_database()
 apply_global_styles()
 
 profile = get_user_profile()
-today_name = datetime.now().strftime("%A")
-today_workout = get_today_workout(today_name)
+page = sidebar_navigation()
 
-hero(
-    "Mission 80 Coach 💪",
-    "Your personalised training, nutrition and lifestyle coaching dashboard.",
-)
+today = datetime.now().strftime("%A")
+today_workout = get_today_workout(today)
 
-current_weight = profile["start_weight_kg"] if profile else START_WEIGHT
+weight_now = profile["start_weight_kg"] if profile else START_WEIGHT
 target_weight = profile["target_weight_kg"] if profile else TARGET_WEIGHT
-weight_to_lose = max(0, current_weight - target_weight)
-progress = max(0, min(100, ((START_WEIGHT - current_weight) / (START_WEIGHT - TARGET_WEIGHT)) * 100))
+remaining = max(0, weight_now - target_weight)
+progress = max(0, min(100, (START_WEIGHT - weight_now) / (START_WEIGHT - TARGET_WEIGHT) * 100))
 
-col1, col2, col3, col4 = st.columns(4)
 
-with col1:
-    metric_card("Current Weight", f"{current_weight:.1f} kg", "Starting point for Mission 80")
+if page == "Dashboard":
+    hero(
+        "Mission 80 Coach 💪",
+        "Your training, nutrition and lifestyle coaching dashboard.",
+    )
 
-with col2:
-    metric_card("Target Weight", f"{target_weight:.1f} kg", "Main transformation goal")
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        stat_card("Current Weight", f"{weight_now:.1f} kg", "Starting point")
+    with c2:
+        stat_card("Target Weight", f"{target_weight:.1f} kg", "Main goal")
+    with c3:
+        stat_card("To Lose", f"{remaining:.1f} kg", "Remaining")
+    with c4:
+        stat_card("Today", today, today_workout["title"])
 
-with col3:
-    metric_card("To Lose", f"{weight_to_lose:.1f} kg", "Remaining journey")
+    st.progress(progress / 100)
+    st.caption(f"Mission progress: {progress:.1f}% complete")
 
-with col4:
-    metric_card("Today", today_name, today_workout["title"])
-
-st.progress(progress / 100)
-st.caption(f"Mission progress: {progress:.1f}% complete")
-
-tabs = st.tabs(
-    [
-        "🏠 Dashboard",
-        "💪 Today",
-        "📚 Exercise Library",
-        "🍽 Nutrition",
-        "📈 Progress",
-        "🤖 Coach",
-        "⚙️ Settings",
-    ]
-)
-
-with tabs[0]:
     left, right = st.columns([1.4, 1])
 
     with left:
         content_card(
-            "Today’s Focus",
+            "Today’s Workout",
             f"{today_workout['focus']} · Expected duration: {today_workout['duration']}",
             badge=today_workout["title"],
         )
 
-        st.subheader("Today’s Plan")
         for exercise in today_workout["exercises"]:
             exercise_row(exercise, "Planned exercise")
 
     with right:
+        milestone_card(weight_now, target_weight)
+
         content_card(
             "Coach Message",
-            "Do the planned session if possible. If time is tight, complete at least 20 minutes. Consistency beats perfection.",
+            "Focus on consistency. If you cannot complete the full session, complete at least 20 minutes.",
             badge="Daily Coach",
         )
 
         content_card(
             "Nutrition Focus",
-            "Protein first today. Keep rice portions controlled and aim for 2.5 litres of water.",
-            badge="Meal Guidance",
+            "Protein first. Keep rice portions controlled and aim for at least 2.5 litres of water.",
+            badge="Food Coach",
         )
 
-with tabs[1]:
-    st.header(f"{today_name}: {today_workout['title']}")
 
+elif page == "Workout":
+    hero("Workout Centre 💪", "Track today’s planned workout and add extra exercises.")
+
+    st.subheader(f"{today}: {today_workout['title']}")
     st.write(today_workout["focus"])
 
     completed = []
+
     for exercise in today_workout["exercises"]:
         if st.checkbox(exercise):
             completed.append(exercise)
 
-    st.subheader("Add Extra Exercise")
+    st.divider()
 
-    exercise_options = get_exercise_names()
-    extra_selected = st.multiselect(
-        "Select extra exercises completed today",
-        exercise_options,
+    st.subheader("Add Extra Exercises")
+
+    extra = st.multiselect(
+        "Choose extra exercises completed today",
+        get_exercise_names(),
     )
 
-    manual_extra = st.text_input("Manual exercise entry, if not listed")
+    manual = st.text_input("Manual exercise entry if not listed")
 
-    if st.button("Save Workout Summary"):
-        st.success("Workout summary captured for this session. Full database logging will be added in the Workout Centre sprint.")
+    duration = st.number_input("Workout duration, minutes", 0, 240, 0)
+    fitxr_minutes = st.number_input("FitXR minutes", 0, 180, 0)
+    fitxr_calories = st.number_input("FitXR calories", 0, 2000, 0)
+    notes = st.text_area("Workout notes")
 
-        st.write("**Completed planned exercises:**")
-        st.write(completed if completed else "None selected")
+    if st.button("Save Workout"):
+        st.success("Workout captured. Full database save will be connected in the Workout Centre sprint.")
 
-        st.write("**Extra exercises:**")
-        st.write(extra_selected if extra_selected else "None selected")
+        st.write("**Completed planned exercises:**", completed)
+        st.write("**Extra exercises:**", extra)
 
-        if manual_extra:
-            st.write("**Manual entry:**")
-            st.write(manual_extra)
+        if manual:
+            st.write("**Manual exercise:**", manual)
 
-with tabs[2]:
-    st.header("Garage Gym Exercise Library")
+        st.write("**Duration:**", duration)
+        st.write("**FitXR:**", f"{fitxr_minutes} mins · {fitxr_calories} calories")
+
+        if notes:
+            st.write("**Notes:**", notes)
+
+
+elif page == "Exercise Library":
+    hero("Exercise Library 📚", "Search exercises by category, muscle or equipment.")
 
     category = st.selectbox(
-        "Filter by category",
+        "Category",
         ["All", "Push", "Pull", "Legs", "Full Body", "Core", "Cardio", "Mobility", "Recovery"],
     )
 
-    search = st.text_input("Search exercises")
+    search = st.text_input("Search")
 
     exercises = get_exercises_by_category(category)
 
     if search:
+        term = search.lower()
         exercises = {
             name: details
             for name, details in exercises.items()
-            if search.lower() in name.lower()
-            or search.lower() in " ".join(details["muscles"]).lower()
-            or search.lower() in " ".join(details["equipment"]).lower()
+            if term in name.lower()
+            or term in " ".join(details["equipment"]).lower()
+            or term in " ".join(details["muscles"]).lower()
         }
 
     for name, details in exercises.items():
@@ -165,38 +157,34 @@ with tabs[2]:
             st.write(f"**Difficulty:** {details['difficulty']}")
 
             if details.get("video"):
-                st.info("Local demo video slot ready. Add MP4 files into assets/videos to enable playback.")
+                st.info("Video slot ready. Add matching MP4 files into assets/videos.")
 
             st.write(f"**Instructions:** {details['instructions']}")
             st.write(f"**Common mistakes:** {details['common_mistakes']}")
             st.write(f"**Coach tip:** {details['coach_tip']}")
             st.write(f"**Alternatives:** {', '.join(details['alternatives'])}")
 
-with tabs[3]:
-    st.header("Nutrition Centre")
 
-    food_data = get_food_database()
-    food_df = pd.DataFrame(food_data)
+elif page == "Nutrition":
+    hero("Nutrition Centre 🍽", "Food list, Nigerian meals and meal timetable planning.")
+
+    foods = pd.DataFrame(get_food_database())
 
     content_card(
         "Nutrition Goal",
-        "Build meals around protein, controlled carbs, water and realistic Nigerian food choices.",
+        "Build meals around protein, controlled carbohydrates, water and realistic Nigerian food choices.",
         badge="Food Coach",
     )
 
-    if not food_df.empty:
-        cuisine_filter = st.selectbox(
-            "Cuisine",
-            ["All"] + sorted(food_df["cuisine"].dropna().unique().tolist()),
-        )
+    if not foods.empty:
+        cuisine = st.selectbox("Cuisine", ["All"] + sorted(foods["cuisine"].unique().tolist()))
 
-        filtered_df = food_df.copy()
-
-        if cuisine_filter != "All":
-            filtered_df = filtered_df[filtered_df["cuisine"] == cuisine_filter]
+        filtered = foods.copy()
+        if cuisine != "All":
+            filtered = filtered[filtered["cuisine"] == cuisine]
 
         st.dataframe(
-            filtered_df[
+            filtered[
                 [
                     "food_name",
                     "category",
@@ -223,41 +211,55 @@ with tabs[3]:
         """
     )
 
-with tabs[4]:
-    st.header("Progress Centre")
+
+elif page == "Progress":
+    hero("Progress Centre 📈", "Track weight, measurements and long-term progress.")
+
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        stat_card("Start Weight", f"{START_WEIGHT:.1f} kg")
+    with c2:
+        stat_card("Target Weight", f"{TARGET_WEIGHT:.1f} kg")
+    with c3:
+        stat_card("Total Goal", f"{START_WEIGHT - TARGET_WEIGHT:.1f} kg loss")
 
     content_card(
         "Progress Tracking",
-        "Weight, measurements, photos and trend charts will be added here in the Progress sprint.",
-        badge="Coming in Sprint",
+        "Weight logs, measurements, progress photos and trend charts will be added here.",
+        badge="Progress",
     )
 
-    st.write("Initial target:")
-    st.write(f"- Start weight: {START_WEIGHT} kg")
-    st.write(f"- Target weight: {TARGET_WEIGHT} kg")
-    st.write(f"- Total goal: {START_WEIGHT - TARGET_WEIGHT:.1f} kg loss")
 
-with tabs[5]:
-    st.header("AI Coach")
+elif page == "AI Coach":
+    hero("AI Coach 🤖", "Personalised coaching based on training, nutrition and habits.")
 
     content_card(
-        "Daily Coaching",
-        "Your AI coach will use workouts, meals, sleep, mood, water, steps and progress data to produce daily recommendations.",
-        badge="Coach Engine",
+        "Today’s Coaching",
+        "Complete the planned session if possible. If time is limited, choose the minimum effective session: 20 minutes.",
+        badge="Daily Coach",
     )
 
-    st.info(
-        "For now, this page shows the shell. The full AI Coach logic will be added after the Workout, Nutrition and Progress modules are connected."
+    content_card(
+        "Nutrition Advice",
+        "Keep protein high today. If eating rice and stew, control the rice portion and prioritise meat, fish, eggs or beans.",
+        badge="Meal Coach",
     )
 
-with tabs[6]:
-    st.header("Settings")
+    content_card(
+        "Next Build",
+        "The AI Coach will become more intelligent once workout, nutrition and progress logs are fully connected.",
+        badge="Coming Soon",
+    )
 
-    st.write("Profile loaded from SQLite:")
+
+elif page == "Settings":
+    hero("Settings ⚙️", "Profile, targets and app preferences.")
+
+    st.subheader("User Profile")
 
     if profile:
         st.json(dict(profile))
     else:
         st.warning("No profile found.")
 
-    st.write("Settings editing will be added in the Settings sprint.")
+    st.info("Editable settings will be added after the database write functions are connected.")
